@@ -59,7 +59,7 @@ class BaseLearner(LightningModule):
         loss, output, target, return_output = self.common_step(batch, batch_idx)
         if isinstance(loss, dict):
             for loss_key in loss:
-                self.log('train/{}'.format(loss_key), loss, on_step=True, on_epoch=False)
+                self.log('train/{}'.format(loss_key), loss[loss_key], on_step=True, on_epoch=False)
         else:
             self.log('train/loss', loss, on_step=True, on_epoch=False)
         self.__log_lr()
@@ -79,7 +79,7 @@ class BaseLearner(LightningModule):
         loss, output, target, return_output = self.common_step(batch, batch_idx)
         if isinstance(loss, dict):
             for loss_key in loss:
-                self.log('val/{}'.format(loss_key), loss, on_step=True, on_epoch=False)
+                self.log('val/{}'.format(loss_key), loss[loss_key], on_step=True, on_epoch=False)
         else:
             self.log('val/loss', loss, on_step=True, on_epoch=False)
         self.val_metrics.update(output, target)
